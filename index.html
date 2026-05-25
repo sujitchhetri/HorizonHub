@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HorizonHub - Discover Nepal's Hidden Gems</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">◈</span>
+                    HorizonHub
+                </a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-active">Home</a>
+                    <a href="destinations.html">Destinations</a>
+                    <a href="about.html">About Us</a>
+                    <a href="bookings.html">My Bookings</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#" id="adminPanelBtn" class="admin-link">⚙️ Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Journey Beyond<br>
+                <span class="gradient-text">The Ordinary</span>
+            </h1>
+            <p class="hero-subtitle">Transparent pricing. Unforgettable experiences. Discover Nepal like never before.</p>
+            <a href="destinations.html" class="cta-button">
+                Explore Destinations
+                <span class="arrow">→</span>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose HorizonHub?</h2>
+                <p class="section-subtitle">Your trusted partner for authentic Nepal experiences</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Transparent Pricing</h3>
+                    <p>No hidden costs. See exactly what you'll pay with our real-time per-person calculator. Every price breakdown is clear and honest.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Curated Experiences</h3>
+                    <p>Handpicked destinations that showcase Nepal's natural and cultural treasures. From the Himalayas to ancient temples.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Booking</h3>
+                    <p>Simple, streamlined process from discovery to confirmation in minutes. Book your dream trip with just a few clicks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏔️</div>
+                    <h3>Expert Guides</h3>
+                    <p>Local and experienced guides who know every trail, temple, and hidden gem. Your safety and experience is our priority.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Flexible Options</h3>
+                    <p>Customize your trip with our add-ons builder. Choose your accommodation, transport, and activities to match your budget.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>Rated Excellence</h3>
+                    <p>All our destinations are carefully vetted and rated by real travelers. Quality experiences guaranteed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Destinations Preview -->
+    <section class="preview-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Destinations</h2>
+                <p class="section-subtitle">Explore our most loved travel experiences</p>
+            </div>
+            
+            <div class="preview-grid" id="previewGrid">
+                <!-- Top 3 destinations will be loaded here -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="destinations.html" class="cta-button">
+                    View All Destinations
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Adventure?</h2>
+                <p>Discover Nepal's hidden gems with transparent pricing and unforgettable experiences.</p>
+                <a href="destinations.html" class="cta-button">
+                    Explore Now
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destination Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="closeDetailModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <div class="modal-content" id="modalContent">
+                <!-- Content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container booking-modal">
+            <button class="modal-close" id="closeBookingModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <div class="modal-content">
+                <h2 class="booking-title">Complete Your Booking</h2>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact</label>
+                        <input type="tel" id="emergencyContact" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests (Optional)</label>
+                        <textarea id="specialRequests" rows="3"></textarea>
+                    </div>
+
+                    <div class="booking-summary" id="bookingSummary">
+                        <!-- Booking summary will be inserted here -->
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        Confirm Booking
+                        <span class="arrow">→</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookings View Modal -->
+    <div id="bookingsModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="closeBookingsModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <div class="modal-content">
+                <h2 class="booking-title">My Bookings</h2>
+                <div id="bookingsList">
+                    <!-- Bookings will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container admin-modal">
+            <button class="modal-close" id="closeAdminModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <div class="modal-content">
+                <h2 class="booking-title">Admin Panel - Manage Destinations</h2>
+                
+                <div class="admin-tabs">
+                    <button class="tab-button active" onclick="switchAdminTab('add')">Add New Destination</button>
+                    <button class="tab-button" onclick="switchAdminTab('manage')">Manage Existing</button>
+                    <button class="tab-button" onclick="switchAdminTab('import')">Import/Export</button>
+                </div>
+
+                <!-- Add Destination Tab -->
+                <div id="addDestinationTab" class="admin-tab active">
+                    <form id="addDestinationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destName">Destination Name *</label>
+                                <input type="text" id="destName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="destCategory">Category *</label>
+                                <select id="destCategory" required>
+                                    <option value="trekking">Trekking</option>
+                                    <option value="cultural">Cultural</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="relaxation">Relaxation</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destDescription">Short Description *</label>
+                            <textarea id="destDescription" rows="2" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destLongDescription">Long Description *</label>
+                            <textarea id="destLongDescription" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destImage">Image URL *</label>
+                            <input type="url" id="destImage" placeholder="https://example.com/image.jpg" required>
+                            <small style="color: var(--text-muted);">Use Unsplash or any image hosting service</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destBasePrice">Base Price (NPR) *</label>
+                                <input type="number" id="destBasePrice" min="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="destRating">Rating (1-5) *</label>
+                                <input type="number" id="destRating" min="1" max="5" step="0.1" value="4.5" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destDuration">Duration *</label>
+                                <input type="text" id="destDuration" placeholder="e.g., 3-4 days" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="destDifficulty">Difficulty *</label>
+                                <select id="destDifficulty" required>
+                                    <option value="Easy">Easy</option>
+                                    <option value="Moderate">Moderate</option>
+                                    <option value="Challenging">Challenging</option>
+                                    <option value="Moderate to Challenging">Moderate to Challenging</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destMinTravelers">Minimum Travelers *</label>
+                            <input type="number" id="destMinTravelers" min="1" value="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Highlights (one per line) *</label>
+                            <textarea id="destHighlights" rows="5" placeholder="Each highlight on a new line" required></textarea>
+                        </div>
+
+                        <div class="addon-builder">
+                            <h3 style="margin-bottom: 1rem;">Add-ons Builder</h3>
+                            <div id="addonsList"></div>
+                            <button type="button" class="add-addon-btn" onclick="addAddonBuilder()">+ Add Add-on Category</button>
+                        </div>
+
+                        <button type="submit" class="submit-button">
+                            Create Destination
+                            <span class="arrow">→</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Manage Destinations Tab -->
+                <div id="manageDestinationTab" class="admin-tab">
+                    <div id="destinationManageList"></div>
+                </div>
+
+                <!-- Import/Export Tab -->
+                <div id="importExportTab" class="admin-tab">
+                    <div class="import-export-section">
+                        <h3>Export Destinations</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Download all destinations as JSON file for backup or sharing.</p>
+                        <button class="submit-button" onclick="exportDestinations()">
+                            Download JSON File
+                        </button>
+                    </div>
+
+                    <div class="import-export-section" style="margin-top: 2rem;">
+                        <h3>Import Destinations</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Upload a JSON file to import destinations. This will merge with existing data.</p>
+                        <input type="file" id="importFile" accept=".json" style="margin-bottom: 1rem;">
+                        <button class="submit-button" onclick="importDestinations()">
+                            Import JSON File
+                        </button>
+                    </div>
+
+                    <div class="import-export-section" style="margin-top: 2rem;">
+                        <h3>Reset to Default</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Restore the original 8 sample destinations.</p>
+                        <button class="submit-button" style="background: var(--text-muted);" onclick="resetToDefault()">
+                            Reset to Default Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="toast">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span id="toastMessage">Booking confirmed!</span>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">Why HorizonHub?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <h3>Transparent Pricing</h3>
+                        <p>No hidden costs. See exactly what you'll pay with our real-time calculator.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <h3>Curated Experiences</h3>
+                        <p>Handpicked destinations that showcase Nepal's natural and cultural treasures.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Booking</h3>
+                        <p>Simple, streamlined process from discovery to confirmation in minutes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">◈</span>
+                        HorizonHub
+                    </div>
+                    <p>Discover Nepal's hidden gems with transparent pricing and unforgettable experiences.</p>
+                </div>
+                <div class="footer-info">
+                    <p>A student project by Sujit Chhetri, Manish Baral & Suaan Shrestha</p>
+                    <p>PCM - BCSIT 2nd Semester</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

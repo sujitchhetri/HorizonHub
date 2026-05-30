@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations - HorizonHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">✈</span>
+                    <span>HorizonHub</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="destinations.html" class="nav-link active">Destinations</a>
+                    
+                    <a href="bookings.html" class="nav-link">My Bookings</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="about.html" class="nav-link">About Us</a>
+                    <button id="adminBtn" class="btn-admin" hidden>Admin</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Explore Destinations</h1>
+            <p>Find your perfect Nepal adventure with transparent pricing</p>
+        </div>
+    </div>
+
+    <section class="destinations-section">
+        <div class="container">
+            <div class="search-controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search destinations..." class="search-input">
+                </div>
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="trekking">Trekking</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="relaxation">Relaxation</option>
+                </select>
+                <select id="budgetFilter" class="filter-select">
+                    <option value="all">All Budgets</option>
+                    <option value="budget">Under NPR 30,000</option>
+                    <option value="mid">NPR 30,000 - 60,000</option>
+                    <option value="high">NPR 60,000 - 100,000</option>
+                    <option value="luxury">NPR 100,000+</option>
+                </select>
+            </div>
+
+            <div class="destinations-grid" id="destinationsGrid"></div>
+            <div id="noResults" class="no-results" style="display:none;">
+                <p>No destinations found. Try different filters.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destination Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="closeDetail">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="closeBooking">&times;</button>
+            <h2>Complete Your Booking</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="bookingName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="bookingEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="bookingPhone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Emergency Contact</label>
+                    <input type="tel" id="emergencyContact" required>
+                </div>
+                <div class="form-group">
+                    <label>Special Requests (Optional)</label>
+                    <textarea id="specialRequests" rows="3"></textarea>
+                </div>
+                <div id="bookingSummary" class="booking-summary"></div>
+                <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">✈</span>
+                        <span>HorizonHub</span>
+                    </div>
+                    <p>Smart travel booking with transparent pricing.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Project Info</h3>
+                    <p>BCSIT 2nd Semester<br>UI/UX Design Project<br>PCM College</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Developers</h3>
+                    <p>Sujit Chhetri<br>Manish Baral<br>Suaan Shrestha</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HorizonHub. A student project by PCM BCSIT students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script src="destinations.js"></script>
+</body>
+</html>

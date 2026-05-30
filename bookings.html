@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - HorizonHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">✈</span>
+                    <span>HorizonHub</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="destinations.html" class="nav-link">Destinations</a>
+                    <a href="bookings.html" class="nav-link active">My Bookings</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="about.html" class="nav-link">About Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>My Bookings</h1>
+            <p>View and manage your trip reservations</p>
+        </div>
+    </div>
+
+    <section class="bookings-section">
+        <div class="container">
+            <div id="bookingsList"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">✈</span>
+                        <span>HorizonHub</span>
+                    </div>
+                    <p>Smart travel booking with transparent pricing.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                       
+                        <li><a href="contact.html">Contact</a></li> 
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Project Info</h3>
+                    <p>BCSIT 2nd Semester<br>UI/UX Design Project<br>PCM College</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Developers</h3>
+                    <p>Sujit Chhetri<br>Manish Baral<br>Suaan Shrestha</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HorizonHub. A student project by PCM BCSIT students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="bookings.js"></script>
+</body>
+</html>

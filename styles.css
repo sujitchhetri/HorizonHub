@@ -372,8 +372,11 @@ section {
 
 .preview-image {
     width: 100%;
-    height: 250px;
+    aspect-ratio: 16 / 9;
+    height: auto;
     object-fit: cover;
+    display: block;
+    border-radius: 10px 10px 0 0;
 }
 
 .preview-content {
@@ -559,6 +562,8 @@ section {
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
 .destination-card:hover {
@@ -568,12 +573,18 @@ section {
 
 .destination-image {
     width: 100%;
-    height: 250px;
+    aspect-ratio: 16 / 9;
+    height: auto;
     object-fit: cover;
+    display: block;
+    border-radius: 10px 10px 0 0;
 }
 
 .destination-content {
     padding: 1.5rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .destination-content h3 {
@@ -585,11 +596,23 @@ section {
     font-size: 1.5rem;
     color: var(--primary);
     font-weight: 700;
-    margin-top: 1rem;
 }
 
 .card-rating {
     color: #ffd700;
+}
+
+.destination-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.destination-book-btn {
+    margin-top: 1rem;
 }
 
 /* Modal */
@@ -859,7 +882,16 @@ section {
     border-radius: 10px;
     box-shadow: var(--shadow-sm);
     margin-bottom: 1.5rem;
-    border-left: 4px solid var(--primary);
+    overflow: hidden;
+    position: relative;
+}
+
+.booking-item::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--primary);
 }
 
 .booking-item h3 {
@@ -982,7 +1014,19 @@ section {
     text-align: center;
     padding: 3rem;
     color: var(--gray);
-    font-size: 1.2rem;
+    background: var(--gray-light);
+    border-radius: 10px;
+}
+
+.no-results h2 {
+    color: var(--dark);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    font-size: 1.1rem;
 }
 
 /* Responsive */

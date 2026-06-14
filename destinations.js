@@ -53,11 +53,15 @@ function displayDestinations(destinationsToShow) {
 
     if (destinationsToShow.length === 0) {
         grid.innerHTML = '';
-        noResults.style.display = 'block';
+        if (noResults) {
+            noResults.style.display = 'block';
+        }
         return;
     }
 
-    noResults.style.display = 'none';
+    if (noResults) {
+        noResults.style.display = 'none';
+    }
 
     grid.innerHTML = destinationsToShow.map(dest => `
         <div class="destination-card" onclick="showDetail(${dest.id})">
@@ -66,10 +70,16 @@ function displayDestinations(destinationsToShow) {
                 <span class="card-category">${dest.category}</span>
                 <h3>${dest.name}</h3>
                 <p>${dest.description}</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                    <div class="card-price">NPR ${dest.price.toLocaleString()}</div>
+                <div class="destination-card-footer">
+                    <div>
+                        <div class="card-price">NPR ${dest.price.toLocaleString()}</div>
+                        <small>per person</small>
+                    </div>
                     <div class="card-rating">⭐ ${dest.rating}</div>
                 </div>
+                <button type="button" class="btn btn-primary btn-block destination-book-btn" onclick="openBooking(${dest.id}, event)">
+                    Book Now
+                </button>
             </div>
         </div>
     `).join('');
@@ -171,19 +181,31 @@ function showDetail(destId) {
 
 function updatePrice() {
     if (!currentDestination) return;
-    const travelers = parseInt(document.getElementById('travelers').value) || 1;
-    const total = currentDestination.price * travelers;
+    const travelers = parseInt(document.getElementById('travelers').value, 10) || 1;
+    const total = (Number(currentDestination.price) || 0) * travelers;
     document.getElementById('totalPrice').textContent = total.toLocaleString();
 }
 
-function openBooking() {
-    const travelers = parseInt(document.getElementById('travelers').value) || 1;
-    const total = currentDestination.price * travelers;
+function openBooking(destId = null, event = null) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    if (destId) {
+        currentDestination = getDestinationsData().find(d => d.id === destId);
+    }
+
+    if (!currentDestination) return;
+
+    const travelersInput = document.getElementById('travelers');
+    const travelers = travelersInput ? parseInt(travelersInput.value, 10) || 1 : 1;
+    const pricePerPerson = Number(currentDestination.price) || 0;
+    const total = pricePerPerson * travelers;
 
     currentBookingData = {
         destination: currentDestination.name,
         travelers: travelers,
-        pricePerPerson: currentDestination.price,
+        pricePerPerson: pricePerPerson,
         total: total
     };
 
@@ -192,7 +214,7 @@ function openBooking() {
         <p><strong>Destination:</strong> ${currentDestination.name}</p>
         <p><strong>Travelers:</strong> ${travelers}</p>
         <p><strong>Duration:</strong> ${currentDestination.duration}</p>
-        <p><strong>Cost per person:</strong> NPR ${currentDestination.price.toLocaleString()}</p>
+        <p><strong>Cost per person:</strong> NPR ${pricePerPerson.toLocaleString()}</p>
         <p><strong>Total Cost:</strong> NPR ${total.toLocaleString()}</p>
     `;
 

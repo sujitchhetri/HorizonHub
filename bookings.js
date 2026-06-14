@@ -23,7 +23,12 @@ function displayBookings() {
         return;
     }
 
-    bookingsList.innerHTML = bookings.map(booking => `
+    bookingsList.innerHTML = bookings.map(booking => {
+        const travelers = parseInt(booking.travelers, 10) || 1;
+        const pricePerPerson = Number(booking.pricePerPerson) || 0;
+        const total = Number(booking.total) || pricePerPerson * travelers;
+
+        return `
         <div class="booking-item">
             <h3>${booking.destination}</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1rem;">
@@ -34,9 +39,9 @@ function displayBookings() {
                     <p><strong>Phone:</strong> ${booking.phone}</p>
                 </div>
                 <div>
-                    <p><strong>Travelers:</strong> ${booking.travelers} person(s)</p>
-                    <p><strong>Cost per person:</strong> NPR ${booking.pricePerPerson.toLocaleString()}</p>
-                    <p><strong>Total Cost:</strong> NPR ${booking.total.toLocaleString()}</p>
+                    <p><strong>Travelers:</strong> ${travelers} person(s)</p>
+                    <p><strong>Cost per person:</strong> NPR ${pricePerPerson.toLocaleString()}</p>
+                    <p><strong>Total Cost:</strong> NPR ${total.toLocaleString()}</p>
                 </div>
             </div>
             ${booking.requests ? `<p><strong>Special Requests:</strong> ${booking.requests}</p>` : ''}
@@ -44,7 +49,8 @@ function displayBookings() {
                 Delete Booking
             </button>
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function deleteBooking(bookingId) {

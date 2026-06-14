@@ -191,6 +191,13 @@ function openBooking(destId = null, event = null) {
         event.stopPropagation();
     }
 
+    if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+        closeModal('detailModal');
+        showToast('Please login before booking a trip.');
+        showLoginNotice();
+        return;
+    }
+
     if (destId) {
         currentDestination = getDestinationsData().find(d => d.id === destId);
     }
@@ -209,6 +216,12 @@ function openBooking(destId = null, event = null) {
         total: total
     };
 
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (currentUser) {
+        document.getElementById('bookingName').value = currentUser.name || '';
+        document.getElementById('bookingEmail').value = currentUser.email || '';
+    }
+
     document.getElementById('bookingSummary').innerHTML = `
         <h3 style="margin-bottom: 1rem;">Trip Summary</h3>
         <p><strong>Destination:</strong> ${currentDestination.name}</p>
@@ -225,8 +238,16 @@ function openBooking(destId = null, event = null) {
 function handleBooking(e) {
     e.preventDefault();
 
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (!currentUser) {
+        showToast('Please login before saving a booking.');
+        window.location.href = getLoginUrl();
+        return;
+    }
+
     const booking = {
         id: Date.now(),
+        userEmail: currentUser.email,
         destination: currentBookingData.destination,
         travelers: currentBookingData.travelers,
         pricePerPerson: currentBookingData.pricePerPerson,
@@ -239,9 +260,9 @@ function handleBooking(e) {
         date: new Date().toISOString()
     };
 
-    let bookings = JSON.parse(localStorage.getItem('horizonhub_bookings') || '[]');
+    let bookings = getUserBookings();
     bookings.push(booking);
-    localStorage.setItem('horizonhub_bookings', JSON.stringify(bookings));
+    saveUserBookings(bookings);
 
     closeModal('bookingModal');
     showToast('✓ Booking confirmed! View it in My Bookings.');
@@ -253,4 +274,37 @@ function closeModal(modalId) {
     if (modal) {
         modal.classList.remove('active');
     }
+}
+
+// Show a login notice modal (used when unauthenticated users attempt to book)
+function showLoginNotice() {
+    let modal = document.getElementById('loginNoticeModal');
+
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'loginNoticeModal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-overlay"></div>
+            <div class="modal-content" style="max-width:420px;">
+                <button class="modal-close" id="closeLoginNotice">&times;</button>
+                <div style="padding-top:0.5rem;">
+                    <h3>Login Required</h3>
+                    <p>Please login to continue booking. You can create an account or login to save your booking.</p>
+                    <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                        <a href="${getLoginUrl()}" class="btn btn-primary">Login</a>
+                        <button class="btn btn-outline" id="dismissLoginNotice">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        modal.querySelector('.modal-overlay').addEventListener('click', () => closeModal('loginNoticeModal'));
+        modal.querySelector('#closeLoginNotice').addEventListener('click', () => closeModal('loginNoticeModal'));
+        modal.querySelector('#dismissLoginNotice').addEventListener('click', () => closeModal('loginNoticeModal'));
+    }
+
+    modal.classList.add('active');
 }

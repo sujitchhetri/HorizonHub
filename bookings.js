@@ -8,13 +8,27 @@ function displayBookings() {
     const bookingsList = document.getElementById('bookingsList');
     if (!bookingsList) return;
 
-    const bookings = JSON.parse(localStorage.getItem('horizonhub_bookings') || '[]');
+    if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+        bookingsList.innerHTML = `
+            <div class="empty-state">
+                <h2>Login Required</h2>
+                <p>Please login to view and manage your bookings.</p>
+                <a href="${getLoginUrl()}" class="btn btn-primary" style="margin-top: 2rem; display: inline-block;">
+                    Login
+                </a>
+            </div>
+        `;
+        return;
+    }
+
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    const bookings = typeof getUserBookings === 'function' ? getUserBookings() : [];
 
     if (bookings.length === 0) {
         bookingsList.innerHTML = `
             <div class="empty-state">
                 <h2>📅 No Bookings Yet</h2>
-                <p>You haven't made any bookings yet. Start exploring destinations!</p>
+                <p>${currentUser.name}, you haven't made any bookings yet. Start exploring destinations!</p>
                 <a href="destinations.html" class="btn btn-primary" style="margin-top: 2rem; display: inline-block;">
                     Browse Destinations
                 </a>
@@ -56,9 +70,9 @@ function displayBookings() {
 function deleteBooking(bookingId) {
     if (!confirm('Are you sure you want to delete this booking?')) return;
 
-    let bookings = JSON.parse(localStorage.getItem('horizonhub_bookings') || '[]');
+    let bookings = getUserBookings();
     bookings = bookings.filter(b => b.id !== bookingId);
-    localStorage.setItem('horizonhub_bookings', JSON.stringify(bookings));
+    saveUserBookings(bookings);
 
     displayBookings();
     showToast('Booking deleted successfully');

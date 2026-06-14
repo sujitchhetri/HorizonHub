@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - HorizonHub</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">✈</span>
+            <span>HorizonHub</span>
+          </a>
+          <button class="mobile-toggle" id="mobileToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="nav-menu" id="navMenu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="destinations.html" class="nav-link">Destinations</a>
+            <a href="bookings.html" class="nav-link">My Bookings</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="about.html" class="nav-link">About Us</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="login-section">
+      <div class="container">
+        <div class="login-panel">
+          <div class="login-copy">
+            <p class="card-category">Account</p>
+            <h1>Login to Book Trips</h1>
+            <p>
+              Your bookings are saved to your account on this browser, so each
+              traveler only sees their own trips.
+            </p>
+          </div>
+
+          <form id="loginForm" class="login-form">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="loginName" required />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="loginPassword" required />
+            </div>
+            <p id="loginMessage" class="form-message"></p>
+            <button type="submit" class="btn btn-primary btn-block">
+              Login
+            </button>
+            <button
+              type="button"
+              id="createAccountBtn"
+              class="btn btn-outline"
+              style="margin-top: 0.75rem; width: 100%"
+            >
+              Create account
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+    <script>
+      const loginForm = document.getElementById("loginForm");
+      const loginMessage = document.getElementById("loginMessage");
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("loginName").value;
+        const password = document.getElementById("loginPassword").value;
+
+        const result = loginUser(name, "", password);
+
+        if (!result.success) {
+          loginMessage.textContent = result.message;
+          return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        window.location.href = params.get("next") || "destinations.html";
+      });
+
+      const createBtn = document.getElementById("createAccountBtn");
+      createBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "register.html";
+      });
+    </script>
+  </body>
+</html>

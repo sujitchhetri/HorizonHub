@@ -1,8 +1,5 @@
 // Main JavaScript - Shared Functions
 
-/* ============================================
-   ADMIN SETTINGS - change these when needed
-   ============================================ */
 const ADMIN_PASSWORD = 'admin123';
 const ADMIN_VISIBLE_BY_DEFAULT = false;
 const ADMIN_SHOW_URL = 'admin=1';
@@ -33,10 +30,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     setupAdminAccess();
+    setupAuthNav();
 
     // Load preview destinations on homepage
     loadPreviewDestinations();
 });
+
+function setupAuthNav() {
+    const navMenu = document.getElementById('navMenu');
+    if (!navMenu || typeof getCurrentUser !== 'function') return;
+
+    let authLink = document.getElementById('authNavLink');
+    if (!authLink) {
+        authLink = document.createElement('a');
+        authLink.id = 'authNavLink';
+        authLink.className = 'nav-link';
+        navMenu.appendChild(authLink);
+    }
+
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+        authLink.href = '#';
+        authLink.textContent = `Logout (${currentUser.name})`;
+        authLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            logoutUser();
+            window.location.href = 'login.html';
+        });
+    } else {
+        authLink.href = getLoginUrl();
+        authLink.textContent = 'Login';
+    }
+}
 
 // Hidden Admin Access
 function setupAdminAccess() {

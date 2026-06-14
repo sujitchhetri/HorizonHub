@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - HorizonHub</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">✈</span>
+            <span>HorizonHub</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="login-section">
+      <div class="container">
+        <div class="login-panel">
+          <div class="login-copy">
+            <p class="card-category">Create</p>
+            <h1>Create an Account</h1>
+            <p>Create an account to save and manage your bookings.</p>
+          </div>
+
+          <form id="registerForm" class="login-form">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="regName" required />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="regPassword" required />
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" id="regPasswordConfirm" required />
+            </div>
+            <p id="registerMessage" class="form-message"></p>
+            <button type="submit" class="btn btn-primary btn-block">
+              Create account
+            </button>
+            <a
+              href="login.html"
+              class="btn btn-outline"
+              style="display: block; margin-top: 0.75rem; text-align: center"
+              >Back to Login</a
+            >
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+    <script>
+      const registerForm = document.getElementById("registerForm");
+      const registerMessage = document.getElementById("registerMessage");
+
+      registerForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("regName").value;
+        const password = document.getElementById("regPassword").value;
+        const passwordConfirm =
+          document.getElementById("regPasswordConfirm").value;
+
+        if (password !== passwordConfirm) {
+          registerMessage.textContent = "Passwords do not match.";
+          return;
+        }
+
+        const result = loginUser(name, "", password);
+
+        if (!result.success) {
+          registerMessage.textContent = result.message;
+          return;
+        }
+
+        // success (already logged in)
+        showToast("Account created successfully!");
+        const params = new URLSearchParams(window.location.search);
+        window.location.href = params.get("next") || "destinations.html";
+      });
+    </script>
+  </body>
+</html>

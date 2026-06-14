@@ -362,7 +362,3 @@ function showToast(message) {
     }, 3000);
 }
 
-// Format currency
-function formatCurrency(amount) {
-    return 'NPR ' + amount.toLocaleString();
-}

@@ -653,6 +653,70 @@ section {
     width: 100%;
 }
 
+.password-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.password-help-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.password-help-trigger {
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.82rem;
+    line-height: 1;
+    cursor: help;
+    padding: 0;
+}
+
+.password-help-popup {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    width: 220px;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    background: var(--dark);
+    color: var(--white);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.password-help-popup::before {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: -6px;
+    width: 12px;
+    height: 12px;
+    background: var(--dark);
+    transform: rotate(45deg);
+}
+
+.password-help-wrap:hover .password-help-popup,
+.password-help-wrap:focus-within .password-help-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
 .login-panel .logo-icon {
     font-size: 2rem;
 }

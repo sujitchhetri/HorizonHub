@@ -219,7 +219,6 @@ function openBooking(destId = null, event = null) {
     const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
     if (currentUser) {
         document.getElementById('bookingName').value = currentUser.name || '';
-        document.getElementById('bookingEmail').value = currentUser.email || '';
     }
 
     document.getElementById('bookingSummary').innerHTML = `
@@ -247,7 +246,7 @@ function handleBooking(e) {
 
     const booking = {
         id: Date.now(),
-        userEmail: currentUser.email,
+        userId: currentUser.id,
         destination: currentBookingData.destination,
         travelers: currentBookingData.travelers,
         pricePerPerson: currentBookingData.pricePerPerson,

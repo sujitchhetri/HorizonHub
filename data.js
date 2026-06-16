@@ -176,6 +176,28 @@ const destinations = [
             hotel: ["Budget Hotel (Free)", "Monastery Guesthouse (+NPR 3,500)", "Premium Hotel (+NPR 8,000)"],
             guide: ["Self-Guided (Free)", "Spiritual Guide (+NPR 3,000)"]
         }
+    },
+    {
+        id: 9,
+        name: "Rara Lake",
+        category: "trekking",
+        description: "Nepal's largest and deepest freshwater lake, offering untouched alpine wilderness, deep blue waters, and absolute tranquility in a remote Himalayan setting.",
+        longDescription: "The Queen of Lakes: Nepal's largest and deepest freshwater lake. Experience pristine alpine beauty with stunning mountain reflections, serene boating, and authentic mountain village culture.",
+        image: "https://images.unsplash.com/photo-1631873505041-6851e1f730ca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        price: 30000,
+        rating: 4.5,
+        duration: "7 days",
+        difficulty: "Easy",
+        highlights: [
+            "Pristine alpine forests and deep blue wilderness scenery",
+            "Stunning reflections of the surrounding snow-capped peaks",
+            "Tranquil boating, horse riding, and photography opportunities",
+            "Authentic cultural interactions in remote western villages"
+        ],
+        addons: {
+            hotel: ["Basic Teahouse (Free)", "Comfort Lodge (+NPR 7,000)"],
+            activities: ["Sightseeing Only (Free)", "Boating Package (+NPR 5,000)", "Full Adventure (+NPR 12,000)"]
+        }
     }
 ];
 

@@ -34,7 +34,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load preview destinations on homepage
     loadPreviewDestinations();
+
+    // Sync destination data across tabs/pages
+    setupStorageSync();
 });
+
+// Listen for changes to localStorage from other tabs/pages
+function setupStorageSync() {
+    window.addEventListener('storage', function(e) {
+        // Only refresh when destinations data changes
+        if (e.key === ADMIN_DESTINATIONS_KEY || e.key === null) {
+            refreshDestinationViews();
+        }
+    });
+}
 
 function setupAuthNav() {
     const navMenu = document.getElementById('navMenu');

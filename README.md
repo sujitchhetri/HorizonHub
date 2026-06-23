@@ -1,2 +1,2 @@
 URL:
-https://sujitchhetri.github.io/HorizonHub/
+sujitchhetri.com.np

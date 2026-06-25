@@ -41,6 +41,8 @@ function displayBookings() {
         const travelers = parseInt(booking.travelers, 10) || 1;
         const pricePerPerson = Number(booking.pricePerPerson) || 0;
         const total = Number(booking.total) || pricePerPerson * travelers;
+        const selectedAddons = Array.isArray(booking.selectedAddons) ? booking.selectedAddons : [];
+        const addonsTotal = Number(booking.addonsTotal) || 0;
 
         return `
         <div class="booking-item">
@@ -55,9 +57,18 @@ function displayBookings() {
                 <div>
                     <p><strong>Travelers:</strong> ${travelers} person(s)</p>
                     <p><strong>Cost per person:</strong> NPR ${pricePerPerson.toLocaleString()}</p>
+                    ${selectedAddons.length ? `<p><strong>Add-ons Total:</strong> NPR ${addonsTotal.toLocaleString()}</p>` : ''}
                     <p><strong>Total Cost:</strong> NPR ${total.toLocaleString()}</p>
                 </div>
             </div>
+            ${selectedAddons.length ? `
+                <p><strong>Selected add-ons:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                    ${selectedAddons.map(addon => `
+                        <li>${addon.type}: ${addon.option}</li>
+                    `).join('')}
+                </ul>
+            ` : ''}
             ${booking.requests ? `<p><strong>Special Requests:</strong> ${booking.requests}</p>` : ''}
             <button class="btn" style="background: #e74c3c; color: white; border: none; margin-top: 1rem; cursor: pointer;" onclick="deleteBooking(${booking.id})">
                 Delete Booking

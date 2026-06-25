@@ -164,6 +164,10 @@ function showDetail(destId) {
                     <span>Base Price (per person):</span>
                     <strong>NPR ${currentDestination.price.toLocaleString()}</strong>
                 </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Add-ons:</span>
+                    <strong>NPR <span id="addonsPrice">0</span></strong>
+                </div>
                 <div style="display: flex; justify-content: space-between; padding-top: 1rem; border-top: 2px solid #eee;">
                     <span style="font-size: 1.2rem; font-weight: 600;">Total Cost:</span>
                     <strong style="font-size: 1.2rem; color: #3498db;">NPR <span id="totalPrice">${currentDestination.price.toLocaleString()}</span></strong>
@@ -176,14 +180,48 @@ function showDetail(destId) {
         </div>
     `;
 
+    document.querySelectorAll('[id^="addon-"]').forEach(select => {
+        select.addEventListener('change', updatePrice);
+    });
+    updatePrice();
     modal.classList.add('active');
 }
 
 function updatePrice() {
     if (!currentDestination) return;
     const travelers = parseInt(document.getElementById('travelers').value, 10) || 1;
-    const total = (Number(currentDestination.price) || 0) * travelers;
-    document.getElementById('totalPrice').textContent = total.toLocaleString();
+    const baseTotal = (Number(currentDestination.price) || 0) * travelers;
+    const selectedAddons = getSelectedAddons();
+    const addonsTotal = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
+    const addonsPrice = document.getElementById('addonsPrice');
+    const totalPrice = document.getElementById('totalPrice');
+
+    if (addonsPrice) {
+        addonsPrice.textContent = addonsTotal.toLocaleString();
+    }
+    if (totalPrice) {
+        totalPrice.textContent = (baseTotal + addonsTotal).toLocaleString();
+    }
+}
+
+function getSelectedAddons() {
+    if (!currentDestination || !currentDestination.addons) return [];
+
+    return Object.keys(currentDestination.addons).map(key => {
+        const select = document.getElementById(`addon-${key}`);
+        const option = select ? select.value : currentDestination.addons[key][0];
+
+        return {
+            type: key,
+            option: option,
+            price: getAddonPrice(option)
+        };
+    });
+}
+
+function getAddonPrice(optionText) {
+    const match = String(optionText).match(/\+NPR\s*([\d,]+)/i);
+    return match ? Number(match[1].replace(/,/g, '')) : 0;
 }
 
 function openBooking(destId = null, event = null) {
@@ -207,12 +245,16 @@ function openBooking(destId = null, event = null) {
     const travelersInput = document.getElementById('travelers');
     const travelers = travelersInput ? parseInt(travelersInput.value, 10) || 1 : 1;
     const pricePerPerson = Number(currentDestination.price) || 0;
-    const total = pricePerPerson * travelers;
+    const selectedAddons = getSelectedAddons();
+    const addonsTotal = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
+    const total = (pricePerPerson * travelers) + addonsTotal;
 
     currentBookingData = {
         destination: currentDestination.name,
         travelers: travelers,
         pricePerPerson: pricePerPerson,
+        selectedAddons: selectedAddons,
+        addonsTotal: addonsTotal,
         total: total
     };
 
@@ -227,6 +269,15 @@ function openBooking(destId = null, event = null) {
         <p><strong>Travelers:</strong> ${travelers}</p>
         <p><strong>Duration:</strong> ${currentDestination.duration}</p>
         <p><strong>Cost per person:</strong> NPR ${pricePerPerson.toLocaleString()}</p>
+        ${selectedAddons.length ? `
+            <p><strong>Selected add-ons:</strong></p>
+            <ul style="margin-left: 1.5rem;">
+                ${selectedAddons.map(addon => `
+                    <li>${addon.type}: ${addon.option}</li>
+                `).join('')}
+            </ul>
+            <p><strong>Add-ons Total:</strong> NPR ${addonsTotal.toLocaleString()}</p>
+        ` : ''}
         <p><strong>Total Cost:</strong> NPR ${total.toLocaleString()}</p>
     `;
 
@@ -250,6 +301,8 @@ function handleBooking(e) {
         destination: currentBookingData.destination,
         travelers: currentBookingData.travelers,
         pricePerPerson: currentBookingData.pricePerPerson,
+        selectedAddons: currentBookingData.selectedAddons,
+        addonsTotal: currentBookingData.addonsTotal,
         total: currentBookingData.total,
         name: document.getElementById('bookingName').value,
         email: document.getElementById('bookingEmail').value,

@@ -176,5 +176,36 @@ function saveUserBookings(bookings) {
 function getLoginUrl() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const currentSearch = window.location.search || '';
-    return `login.html?next=${encodeURIComponent(currentPage + currentSearch)}`;
+    const nextPage = getSafeRedirectTarget(currentPage + currentSearch, 'index.html');
+    return `login.html?next=${encodeURIComponent(nextPage)}`;
+}
+
+function getSafeRedirectTarget(value, fallback = 'destinations.html') {
+    const target = String(value || '').trim();
+
+    if (!target || target.startsWith('//') || target.includes('\\')) {
+        return fallback;
+    }
+
+    try {
+        const parsedUrl = new URL(target, window.location.origin);
+
+        if (parsedUrl.origin !== window.location.origin) {
+            return fallback;
+        }
+
+        const page = parsedUrl.pathname.split('/').pop() || fallback;
+
+        if (!/^[a-z0-9_-]+\.html$/i.test(page)) {
+            return fallback;
+        }
+
+        if (page === 'login.html' || page === 'register.html') {
+            return fallback;
+        }
+
+        return `${page}${parsedUrl.search}${parsedUrl.hash}`;
+    } catch (error) {
+        return fallback;
+    }
 }

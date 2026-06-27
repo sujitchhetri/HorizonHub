@@ -95,13 +95,15 @@
         }
 
         const params = new URLSearchParams(window.location.search);
-        window.location.href = params.get("next") || "destinations.html";
+        window.location.href = getSafeRedirectTarget(params.get("next"));
       });
 
       const createBtn = document.getElementById("createAccountBtn");
       createBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        window.location.href = "register.html";
+        const params = new URLSearchParams(window.location.search);
+        const nextPage = getSafeRedirectTarget(params.get("next"));
+        window.location.href = `register.html?next=${encodeURIComponent(nextPage)}`;
       });
     </script>
   </body>

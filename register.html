@@ -103,7 +103,7 @@
         // success (already logged in)
         showToast("Account created successfully!");
         const params = new URLSearchParams(window.location.search);
-        window.location.href = params.get("next") || "destinations.html";
+        window.location.href = getSafeRedirectTarget(params.get("next"));
       });
     </script>
   </body>

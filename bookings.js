@@ -4,6 +4,28 @@ document.addEventListener('DOMContentLoaded', function() {
     displayBookings();
 });
 
+function formatBookingDate(dateValue) {
+    if (!dateValue) return 'Not selected';
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+        const [year, month, day] = dateValue.split('-').map(Number);
+        return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return 'Not selected';
+
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
 function displayBookings() {
     const bookingsList = document.getElementById('bookingsList');
     if (!bookingsList) return;
@@ -49,7 +71,8 @@ function displayBookings() {
             <h3>${booking.destination}</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1rem;">
                 <div>
-                    <p><strong>Booked on:</strong> ${new Date(booking.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p><strong>Travel Date:</strong> ${formatBookingDate(booking.travelDate)}</p>
+                    <p><strong>Booked on:</strong> ${formatBookingDate(booking.date)}</p>
                     <p><strong>Name:</strong> ${booking.name}</p>
                     <p><strong>Email:</strong> ${booking.email}</p>
                     <p><strong>Phone:</strong> ${booking.phone}</p>

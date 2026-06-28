@@ -224,6 +224,15 @@ function getAddonPrice(optionText) {
     return match ? Number(match[1].replace(/,/g, '')) : 0;
 }
 
+function getTodayDateInputValue() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
 function openBooking(destId = null, event = null) {
     if (event) {
         event.stopPropagation();
@@ -261,6 +270,15 @@ function openBooking(destId = null, event = null) {
     const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
     if (currentUser) {
         document.getElementById('bookingName').value = currentUser.name || '';
+    }
+
+    const bookingDateInput = document.getElementById('bookingDate');
+    if (bookingDateInput) {
+        const today = getTodayDateInputValue();
+        bookingDateInput.min = today;
+        if (!bookingDateInput.value) {
+            bookingDateInput.value = today;
+        }
     }
 
     document.getElementById('bookingSummary').innerHTML = `
@@ -307,6 +325,7 @@ function handleBooking(e) {
         name: document.getElementById('bookingName').value,
         email: document.getElementById('bookingEmail').value,
         phone: document.getElementById('bookingPhone').value,
+        travelDate: document.getElementById('bookingDate').value,
         emergency: document.getElementById('emergencyContact').value,
         requests: document.getElementById('specialRequests').value,
         date: new Date().toISOString()

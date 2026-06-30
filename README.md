@@ -47,7 +47,7 @@ This is a pure vanilla frontend — no frameworks, no build tools.
 - localStorage — for saving user accounts and booking data in the browser
 
 File Structure
-
+'''
 horizonhub
 ├── index.html Homepage
 ├── destinations.html Destination listing + booking modals
@@ -64,7 +64,7 @@ horizonhub
 ├── main.js Shared functions: nav, toast, preview grid
 ├── destinations.js Destination display, filtering, modals, booking logic
 └── bookings.js Booking list display and delete
-
+'''
 The Team
 
 We're three BCSIT students who built this as our 2nd Semester UI/UX Design project.
